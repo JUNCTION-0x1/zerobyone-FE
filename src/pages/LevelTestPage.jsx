@@ -14,7 +14,7 @@ const LevelTestPage = () => {
   const navigate = useNavigate();
   const { setLevel } = useUserStore();
   const timerRef = useRef(null);
-  const recordingDuration = 30; // 30초
+  const recordingDuration = 15; // 15초
 
   // 녹음 시작/중지 핸들러
   const handleMicClick = () => {
@@ -34,14 +34,14 @@ const LevelTestPage = () => {
     setRecordingTime(0);
     setRecordingProgress(0);
 
-    // 타이머 시작 (100ms마다 업데이트로 부드러운 애니메이션)
+    // 타이머 시작 (100ms마다 업데이트로 부드러운 15초 애니메이션)
     timerRef.current = setInterval(() => {
       setRecordingTime((prevTime) => {
         const newTime = prevTime + 0.1; // 0.1초씩 증가
         const progress = (newTime / recordingDuration) * 100;
         setRecordingProgress(progress);
 
-        // 30초 완료 시 자동 중지
+        // 15초 완료 시 자동 중지
         if (newTime >= recordingDuration) {
           stopRecording();
           return recordingDuration;

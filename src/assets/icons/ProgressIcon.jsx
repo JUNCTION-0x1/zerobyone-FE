@@ -4,7 +4,7 @@ const ProgressIcon = ({ width = 180, height = 180, progress = 0, ...props }) => 
   // 원의 중심과 반지름 계산 (마이크 버튼 148x148 주위에 맞춤)
   const centerX = 90;
   const centerY = 90;
-  const radius = 80; // 마이크 버튼(74px radius) + 여백
+  const radius = 83; // 마이크 버튼(74px radius) + 여백
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
@@ -16,7 +16,7 @@ const ProgressIcon = ({ width = 180, height = 180, progress = 0, ...props }) => 
         cy={centerY}
         r={radius}
         stroke="#E8E8E8"
-        strokeWidth="6"
+        strokeWidth="10"
         fill="none"
         strokeLinecap="round"
         opacity="0.3"
@@ -27,7 +27,7 @@ const ProgressIcon = ({ width = 180, height = 180, progress = 0, ...props }) => 
         cy={centerY}
         r={radius}
         stroke="url(#paint0_linear_progress)"
-        strokeWidth="6"
+        strokeWidth="10"
         fill="none"
         strokeLinecap="round"
         strokeDasharray={circumference}
