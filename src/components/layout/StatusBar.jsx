@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SignalIcon, WifiIcon, BatteryIcon } from '../../assets/icons';
 
-const StatusBar = () => {
+const StatusBar = ({ timeFormat = '24h' }) => {
+  const [currentTime, setCurrentTime] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+
+      if (timeFormat === '12h') {
+        // 12시간제 (AM/PM)
+        const hours12 = now.getHours() % 12 || 12;
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+        setCurrentTime(`${hours12}:${minutes} ${ampm}`);
+      } else {
+        // 24시간제 (기본값)
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        setCurrentTime(`${hours}:${minutes}`);
+      }
+    };
+
+    // 즉시 실행
+    updateTime();
+
+    // 1분마다 업데이트
+    const interval = setInterval(updateTime, 60000);
+
+    return () => clearInterval(interval);
+  }, [timeFormat]);
   return (
     <div
       data-dark-mode="False"
@@ -39,16 +67,14 @@ const StatusBar = () => {
             width: 54,
             height: 21,
             position: 'relative',
-            borderRadius: 24
+            borderRadius: 24,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <div
             style={{
-              width: 54,
-              height: 20,
-              left: 0,
-              top: 1,
-              position: 'absolute',
               textAlign: 'center',
               color: 'black',
               fontSize: 16,
@@ -58,7 +84,7 @@ const StatusBar = () => {
               wordWrap: 'break-word'
             }}
           >
-            9:41
+            {currentTime}
           </div>
         </div>
       </div>
