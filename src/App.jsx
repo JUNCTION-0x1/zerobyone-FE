@@ -24,8 +24,8 @@ function App() {
             <Route path="/level-test" element={<LevelTestPage />} />
             <Route path="/level-test-result" element={<IntermediateTestResultPage />} /> {/* New */}
             <Route path="/overall-roadmap" element={<OverallRoadmapPage />} /> {/* New */}
-            <Route path="/roadmap" element={<RoadmapPage />} />
-            <Route path="/stage-start" element={<StageStartPage />} />
+            <Route path="/stage-start" element={<RoadmapPage />} />
+            <Route path="/roadmap" element={<StageStartPage />} />
             <Route path="/problem-intro" element={<ProblemIntroPage />} />
             <Route path="/problem" element={<ProblemPage />} />
             <Route path="/intermediate-test-challenge" element={<IntermediateTestChallengePage />} />
