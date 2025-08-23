@@ -20,11 +20,10 @@ export const submitLevelTest = async (audioBlob) => {
 
     // For now, we return a mock response after a delay.
     console.log('Submitting level test to mock API...', formData.get('audio'));
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    const mockResponse = { level: '인턴', levelName: 'A2' };
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const mockResponse = { level: '1', levelName: '오렌지 농장 Picker' };
     console.log('Mock API response for level test:', mockResponse);
     return mockResponse;
-
   } catch (error) {
     console.error('Error submitting level test:', error);
     // You might want to throw a custom error or handle it here

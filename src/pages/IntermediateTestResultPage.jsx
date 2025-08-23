@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
 import StatusBar from '../components/layout/StatusBar';
+import { OrangeIcon } from '../assets/icons';
 
 const IntermediateTestResultPage = () => {
   const navigate = useNavigate();
@@ -17,37 +18,72 @@ const IntermediateTestResultPage = () => {
   }, [navigate]);
 
   return (
-    <div style={{
-      width: '100%', 
-      height: '100%', 
-      position: 'relative', 
-      background: '#EAF7FF', 
-      overflow: 'hidden',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'center',
-      padding: '20px',
-      boxSizing: 'border-box'
-    }}>
+    <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F4F4', overflow: 'hidden' }}>
       <StatusBar />
-      
-      <div style={{
-        fontFamily: 'Pretendard', 
-        color: '#333', 
-        fontSize: '28px', 
-        fontWeight: '600', 
-        lineHeight: '1.4em',
-        marginBottom: '50px'
-      }}>
-        <p>당신의 현재 레벨은...</p>
-        <p style={{fontSize: '36px', color: '#0099FB'}}>{level} ({levelName})</p>
+
+      {/* 당신의 현재 레벨은... */}
+      <div
+        style={{
+          left: 99,
+          top: 242,
+          position: 'absolute',
+          textAlign: 'center',
+          color: '#525252',
+          fontSize: 24,
+          fontFamily: 'Pretendard',
+          fontWeight: '700',
+          lineHeight: '36px'
+        }}
+      >
+        당신의 현재 레벨은...
       </div>
 
-      <p style={{fontFamily: 'Pretendard', color: '#555', fontSize: '16px'}}>
-        3초 후 전체 로드맵으로 이동합니다.
-      </p>
+      {/* 오렌지 농장 PIcker */}
+      <div
+        style={{
+          width: 249,
+          height: 51,
+          left: 75,
+          top: 301,
+          position: 'absolute',
+          color: '#F97316',
+          fontSize: 32,
+          fontFamily: 'Pretendard',
+          fontWeight: '700',
+          lineHeight: '52px'
+        }}
+      >
+        {levelName || '오렌지 농장 PIcker'}
+      </div>
+
+      {/* 귤 아이콘 (가운데) */}
+      <div
+        style={{
+          position: 'absolute',
+          left: '50%',
+          top: 384,
+          transform: 'translateX(-50%)'
+        }}
+      >
+        <OrangeIcon width={84} height={113} />
+      </div>
+
+      {/* 3초 후 로드맵으로 이동합니다 */}
+      <div
+        style={{
+          left: 81,
+          top: 544,
+          position: 'absolute',
+          textAlign: 'center',
+          color: '#A3A3A3',
+          fontSize: 20,
+          fontFamily: 'Pretendard',
+          fontWeight: '500',
+          lineHeight: '28px'
+        }}
+      >
+        3초 후 로드맵으로 이동합니다
+      </div>
     </div>
   );
 };
