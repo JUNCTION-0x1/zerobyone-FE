@@ -38,16 +38,16 @@ const OverallRoadmapPage = () => {
         onClick={handleVocabularyClick}
         style={{
           position: 'absolute',
-          top: '75px',
-          right: '30px',
+          top: '60px',
+          right: '0px',
           cursor: 'pointer',
           transition: 'transform 0.2s ease',
-          transform: 'scale(0.8)'
+          zIndex: 10
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(0.85)')}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(0.8)')}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
       >
-        <VocabularyIcon />
+        <VocabularyIcon width={121} height={122} />
         <div
           style={{
             marginTop: '5px',
@@ -60,40 +60,24 @@ const OverallRoadmapPage = () => {
         ></div>
       </div>
 
-      {/* 곰돌이 (Picker) 아이콘 (하단 중앙) */}
+      {/* 곰돌이 (Picker) 아이콘 (왼쪽 하단) */}
       <div
         onClick={handlePickerClick}
         style={{
           position: 'absolute',
-          bottom: '120px',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          bottom: '50px',
+          left: '60px',
           cursor: 'pointer',
           transition: 'transform 0.2s ease',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
+          zIndex: 10
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateX(-50%) scale(1.05)')}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateX(-50%) scale(1)')}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
       >
-        <OrangePickerIcon width={100} height={150} />
-        <div
-          style={{
-            marginTop: '10px',
-            padding: '8px 16px',
-            backgroundColor: 'white',
-            borderRadius: '20px',
-            boxShadow: '0px 2px 8px rgba(0,0,0,0.2)',
-            fontFamily: 'Pretendard',
-            fontSize: '14px',
-            fontWeight: 'bold',
-            color: '#78350F',
-            textAlign: 'center'
-          }}
-        >
-          Picker
-        </div>
+        <OrangePickerIcon width={160} height={240} />
       </div>
     </div>
   );
