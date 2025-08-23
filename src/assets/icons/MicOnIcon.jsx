@@ -1,0 +1,19 @@
+import React from 'react';
+
+const MicOnIcon = ({ width = 148, height = 148, ...props }) => (
+  <svg width={width} height={height} viewBox="0 0 148 148" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <rect width="148" height="148" rx="74" fill="url(#paint0_linear_203_512)" />
+    <rect x="60" y="48" width="12" height="52" rx="6" fill="white" />
+    <rect x="76" y="60" width="12" height="28" rx="6" fill="white" />
+    <rect x="92" y="65" width="12" height="18" rx="6" fill="white" />
+    <rect x="44" y="65" width="12" height="18" rx="6" fill="white" />
+    <defs>
+      <linearGradient id="paint0_linear_203_512" x1="51.5" y1="11.5" x2="94.5" y2="148" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#FFA54B" />
+        <stop offset="1" stopColor="#FA6400" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+export default MicOnIcon;

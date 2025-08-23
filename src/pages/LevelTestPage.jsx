@@ -1,22 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
 import Spinner from '../components/common/Spinner';
 import StatusBar from '../components/layout/StatusBar';
 import { submitLevelTest } from '../services/levelTestService';
+import { MicOffIcon, MicOnIcon, ProgressIcon } from '../assets/icons';
 
 const LevelTestPage = () => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [recordingProgress, setRecordingProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { setLevel } = useUserStore();
+  const timerRef = useRef(null);
+  const recordingDuration = 30; // 30초
 
-  const handleTestSubmit = async () => {
-    setIsSubmitting(true);
+  // 녹음 시작/중지 핸들러
+  const handleMicClick = () => {
+    if (isRecording) {
+      // 녹음 중지
+      stopRecording();
+    } else {
+      // 녹음 시작
+      startRecording();
+    }
+  };
+
+  // 녹음 시작
+  const startRecording = () => {
     console.log('LevelTestPage: Recording started...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    console.log('LevelTestPage: Recording finished. Submitting for level test...');
+    setIsRecording(true);
+    setRecordingTime(0);
+    setRecordingProgress(0);
+
+    // 타이머 시작
+    timerRef.current = setInterval(() => {
+      setRecordingTime((prevTime) => {
+        const newTime = prevTime + 1;
+        const progress = (newTime / recordingDuration) * 100;
+        setRecordingProgress(progress);
+
+        // 30초 완료 시 자동 중지
+        if (newTime >= recordingDuration) {
+          stopRecording();
+          return recordingDuration;
+        }
+        return newTime;
+      });
+    }, 1000);
+  };
+
+  // 녹음 중지
+  const stopRecording = () => {
+    console.log('LevelTestPage: Recording stopped...');
+    setIsRecording(false);
+
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+
+    // 녹음 완료 후 제출
+    submitRecording();
+  };
+
+  // 녹음 파일 제출
+  const submitRecording = async () => {
+    setIsSubmitting(true);
+    console.log('LevelTestPage: Submitting recording for level test...');
 
     try {
+      // 실제 녹음 파일이 있다면 여기서 처리
       const dummyAudioBlob = new Blob(['dummy audio'], { type: 'audio/wav' });
       const result = await submitLevelTest(dummyAudioBlob);
 
@@ -30,6 +85,15 @@ const LevelTestPage = () => {
       setIsSubmitting(false);
     }
   };
+
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
 
   console.log('LevelTestPage: Displaying test UI.');
   return (
@@ -64,6 +128,31 @@ const LevelTestPage = () => {
           >
             레벨 측정 중...
           </text>
+        ) : isRecording ? (
+          <>
+            <text
+              x="50%"
+              y="250"
+              textAnchor="middle"
+              fill="#353535"
+              fontSize="24"
+              fontFamily="Pretendard"
+              fontWeight="700"
+            >
+              녹음 중... ({recordingDuration - recordingTime}초 남음)
+            </text>
+            <text
+              x="50%"
+              y="280"
+              textAnchor="middle"
+              fill="#8E8E8E"
+              fontSize="18"
+              fontFamily="Pretendard"
+              fontWeight="500"
+            >
+              마이크를 다시 눌러 중지할 수 있습니다.
+            </text>
+          </>
         ) : (
           <>
             <text
@@ -92,28 +181,56 @@ const LevelTestPage = () => {
         )}
 
         {/* Instruction Text */}
-        <text x="50%" y="360" textAnchor="middle" fill="#8E8E8E" fontSize="20" fontFamily="Pretendard" fontWeight="500">
-          마이크를 눌러 영어로 말해보세요.
-        </text>
-
-        {/* Mic Button */}
-        <g transform="translate(122, 436)">
-          <rect
-            width="148"
-            height="148"
-            rx="74"
-            fill={isSubmitting ? '#D9D9D9' : '#353535'}
-            onClick={!isSubmitting ? handleTestSubmit : undefined}
-            style={{ cursor: isSubmitting ? 'default' : 'pointer' }}
-          />
-          <path
-            d="M73.5 36.8125C69.2731 36.8125 65.2193 38.4916 62.2305 41.4805C59.2416 44.4693 57.5625 48.5231 57.5625 52.75V74C57.5625 78.2269 59.2416 82.2807 62.2305 85.2695C65.2193 88.2584 69.2731 89.9375 73.5 89.9375C77.7269 89.9375 81.7807 88.2584 84.7695 85.2695C87.7584 82.2807 89.4375 78.2269 89.4375 74V52.75C89.4375 48.5231 87.7584 44.4693 84.7695 41.4805C81.7807 38.4916 77.7269 36.8125 73.5 36.8125ZM49.5938 71.3438C50.2982 71.3438 50.9739 71.6236 51.472 72.1217C51.9701 72.6199 52.25 73.2955 52.25 74C52.25 79.6358 54.4888 85.0409 58.474 89.026C62.4591 93.0112 67.8641 95.25 73.5 95.25C79.1358 95.25 84.5409 93.0112 88.526 89.026C92.5112 85.0409 94.75 79.6358 94.75 74C94.75 73.2955 95.0299 72.6199 95.528 72.1217C96.0261 71.6236 96.7018 71.3438 97.4062 71.3438C98.1107 71.3438 98.7864 71.6236 99.2845 72.1217C99.7826 72.6199 100.062 73.2955 100.062 74C100.062 87.7753 89.5783 99.1016 76.1536 100.43L76.1562 100.562V108.531C76.1562 109.236 75.8764 109.911 75.3783 110.41C74.8801 110.908 74.2045 111.188 73.5 111.188C72.7955 111.188 72.1199 110.908 71.6217 110.41C71.1236 109.911 70.8438 109.236 70.8438 108.531V100.562L70.8464 100.43C57.4217 99.1016 46.9375 87.778 46.9375 74C46.9375 73.2955 47.2174 72.6199 47.7155 72.1217C48.2136 71.6236 48.8893 71.3438 49.5938 71.3438Z"
-            fill={isSubmitting ? '#8E8E8E' : 'white'}
-            onClick={!isSubmitting ? handleTestSubmit : undefined}
-            style={{ cursor: isSubmitting ? 'default' : 'pointer' }}
-          />
-        </g>
+        {!isRecording && !isSubmitting && (
+          <text
+            x="50%"
+            y="360"
+            textAnchor="middle"
+            fill="#8E8E8E"
+            fontSize="20"
+            fontFamily="Pretendard"
+            fontWeight="500"
+          >
+            마이크를 눌러 영어로 말해보세요.
+          </text>
+        )}
       </svg>
+
+      {/* Progress Ring (녹음 중일 때만 표시) */}
+      {isRecording && (
+        <div
+          style={{
+            position: 'absolute',
+            left: 113, // 마이크 버튼보다 약간 왼쪽
+            top: 420, // 마이크 버튼보다 약간 위쪽
+            pointerEvents: 'none'
+          }}
+        >
+          <ProgressIcon width={167} height={189} progress={recordingProgress} />
+        </div>
+      )}
+
+      {/* Mic Button */}
+      <div
+        style={{
+          position: 'absolute',
+          left: 122,
+          top: 436,
+          cursor: isSubmitting ? 'default' : 'pointer'
+        }}
+        onClick={!isSubmitting ? handleMicClick : undefined}
+      >
+        {isRecording ? (
+          <MicOnIcon width={148} height={148} />
+        ) : (
+          <MicOffIcon
+            width={148}
+            height={148}
+            fill={isSubmitting ? '#8E8E8E' : 'white'}
+            bgFill={isSubmitting ? '#D9D9D9' : '#353535'}
+          />
+        )}
+      </div>
 
       {isSubmitting && <Spinner />}
     </div>
