@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SignalIcon, WifiIcon, BatteryIcon } from '../../assets/icons';
 
-const StatusBar = ({ timeFormat = '24h' }) => {
+const StatusBar = ({ timeFormat = '24h', backgroundColor = 'transparent' }) => {
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
@@ -43,7 +43,8 @@ const StatusBar = ({ timeFormat = '24h' }) => {
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'flex-end',
-        display: 'inline-flex'
+        display: 'inline-flex',
+        backgroundColor: backgroundColor
       }}
     >
       {/* Time Section */}

@@ -2,66 +2,82 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import StatusBar from '../components/layout/StatusBar';
 import useUserStore from '../store/userStore';
+import { OrangePickerIcon, VocabularyIcon } from '../assets/icons';
+import overallRoadmapBg from '../assets/images/overall_roadmap.png';
 
 const OverallRoadmapPage = () => {
   const navigate = useNavigate();
   const { level, levelName } = useUserStore();
 
-  // Updated job categories based on user's clarification
-  const jobCategories = [
-    { id: 3, name: '스타벅스 파트너', active: true, minLevel: '주니어' }, // Example: requires '주니어' level
-    { id: 2, name: '맥도날드 크루', active: true, minLevel: '인턴' }, // Example: requires '인턴' level
-    { id: 1, name: '오렌지 농장 피커', active: true, minLevel: '초보' } // Example: requires '초보' level
-  ];
-
-  const handleJobClick = (job) => {
-    // In a real app, you'd check if the user's level meets minLevel
-    if (job.active) {
-      navigate('/stage-start', { state: { jobCategory: job.name } });
-    }
+  const handlePickerClick = () => {
+    navigate('/stage-start', { state: { jobCategory: '오렌지 농장 피커' } });
   };
 
-  const jobCardStyle = (job) => ({
-    width: '100%',
-    padding: '20px',
-    marginBottom: '15px',
-    backgroundColor: job.active ? 'white' : '#f0f0f0',
-    border: job.active ? '2px solid #53BBFD' : '2px solid #ccc',
-    borderRadius: '15px', // Rectangular components
-    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-    cursor: job.active ? 'pointer' : 'not-allowed',
-    fontFamily: 'Pretendard',
-    color: '#333',
-    fontSize: '20px',
-    fontWeight: '600',
-    textAlign: 'center'
-  });
+  const handleVocabularyClick = () => {
+    console.log('단어장 클릭됨');
+    // 추후 단어장 페이지로 이동하는 로직 추가 가능
+  };
 
   return (
     <div
       style={{
-        width: '100%',
-        height: '100%',
+        width: '393px',
+        height: '852px',
         position: 'relative',
-        background: '#EAF7FF',
-        overflow: 'hidden',
-        padding: '20px',
-        boxSizing: 'border-box'
+        backgroundImage: `url(${overallRoadmapBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        overflow: 'hidden'
       }}
     >
-      <StatusBar />
+      <StatusBar backgroundColor="#8ED2FF" />
 
-      <h1 style={{ textAlign: 'center', marginTop: '70px', fontFamily: 'Pretendard', color: '#333' }}>전체 로드맵</h1>
-      <p style={{ textAlign: 'center', fontFamily: 'Pretendard', color: '#555', fontSize: '16px' }}>
-        현재 레벨: {level || 'N/A'} ({levelName || 'Unranked'})
-      </p>
+      {/* 단어장 아이콘 (오른쪽 상단) */}
+      <div
+        onClick={handleVocabularyClick}
+        style={{
+          position: 'absolute',
+          top: '60px',
+          right: '0px',
+          cursor: 'pointer',
+          transition: 'transform 0.2s ease',
+          zIndex: 10
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+      >
+        <VocabularyIcon width={121} height={122} />
+        <div
+          style={{
+            marginTop: '5px',
+            textAlign: 'center',
+            fontFamily: 'Pretendard',
+            fontSize: '12px',
+            fontWeight: 'bold',
+            color: '#FF890A'
+          }}
+        ></div>
+      </div>
 
-      <div style={{ marginTop: '30px' }}>
-        {jobCategories.map((job) => (
-          <div key={job.id} onClick={() => handleJobClick(job)} style={jobCardStyle(job)}>
-            {job.name}
-          </div>
-        ))}
+      {/* 곰돌이 (Picker) 아이콘 (왼쪽 하단) */}
+      <div
+        onClick={handlePickerClick}
+        style={{
+          position: 'absolute',
+          bottom: '50px',
+          left: '60px',
+          cursor: 'pointer',
+          transition: 'transform 0.2s ease',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          zIndex: 10
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+      >
+        <OrangePickerIcon width={160} height={240} />
       </div>
     </div>
   );
