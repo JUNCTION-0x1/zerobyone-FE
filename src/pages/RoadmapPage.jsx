@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StatusBar from '../components/layout/StatusBar';
+import backgroundImage from '../assets/images/stageStartBackground.png';
 
 const RoadmapPage = () => {
   const navigate = useNavigate();
@@ -17,42 +18,63 @@ const RoadmapPage = () => {
         width: '100%',
         height: '100%',
         position: 'relative',
-        background: '#EAF7FF',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
       }}
     >
-      <StatusBar />
+      <div style={{ 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100%', 
+        zIndex: 4 
+      }}>
+        <StatusBar />
+      </div>
+
+      {/* 배경 이미지 레이어 */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: 'auto',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          zIndex: 1
+        }}
+      />
+      
+      {/* 전체 화면 터치 영역 */}
+      <div
+        onClick={handleStartClick}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          cursor: 'pointer',
+          zIndex: 2
+        }}
+      />
+      
       <div
         style={{
           position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          textAlign: 'center'
+          textAlign: 'center',
+          zIndex: 3 // 터치 영역 위에 표시되도록
         }}
       >
-        <img src="/icons/character.svg" alt="character" style={{ width: 150, height: 150, marginBottom: '20px' }} />
-        <p
-          style={{ fontFamily: 'Pretendard', fontSize: '22px', fontWeight: '600', color: '#333', marginBottom: '30px' }}
-        >
-          오렌지 농장에서 살아남기 Start !
-        </p>
-        <button
-          onClick={handleStartClick}
-          style={{
-            padding: '15px 30px',
-            fontSize: '18px',
-            cursor: 'pointer',
-            background: '#0099FB',
-            color: 'white',
-            border: 'none',
-            borderRadius: '25px',
-            fontFamily: 'Pretendard',
-            fontWeight: '600'
-          }}
-        >
-          게임 시작하기
-        </button>
       </div>
     </div>
   );

@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StatusBar from '../components/layout/StatusBar';
 import audioSrc from '../assets/dummy.m4a'; // Placeholder audio
-import backgroundImage from '../assets/levelstartbackground.png'; // 이미지 import 추가
-import caption from '../assets/levelstartcaption.png';
+import backgroundImage from '../assets/images/levelstartbackground.png'; // 이미지 import 추가
+import caption from '../assets/images/levelstartcaption.png';
 
 const ProblemIntroPage = () => {
   const navigate = useNavigate();
@@ -42,6 +42,16 @@ const ProblemIntroPage = () => {
       alignItems: 'center',
       textAlign: 'center'
     }}>
+      <div style={{ 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100%', 
+        zIndex: 4 
+      }}>
+        <StatusBar />
+      </div>
+      
       {/* 배경 이미지 레이어 */}
       <div
         style={{
