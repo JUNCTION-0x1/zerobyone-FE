@@ -8,7 +8,7 @@ const StageStartPage = () => {
   const { stageId } = location.state || { stageId: 1 };
 
   const handleStartClick = () => {
-    navigate('/learning', { state: { stageId } });
+    navigate('/story-intro', { state: { stageId } });
   };
 
   return (
