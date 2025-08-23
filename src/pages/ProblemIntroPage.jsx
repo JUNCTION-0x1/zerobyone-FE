@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import StatusBar from '../components/layout/StatusBar';
 import audioSrc from '../assets/dummy.m4a'; // Placeholder audio
 
-const StoryIntroPage = () => {
+const ProblemIntroPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { stageId } = location.state || { stageId: 1 };
@@ -67,4 +67,4 @@ const StoryIntroPage = () => {
   );
 };
 
-export default StoryIntroPage;
+export default ProblemIntroPage;
