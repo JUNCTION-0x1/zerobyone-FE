@@ -1,32 +1,24 @@
-import apiClient from './api';
+import axios from 'axios'; // Import axios directly for this specific endpoint
 
 /**
  * Submits the level test audio for evaluation.
  * @param {Blob} audioBlob The recorded audio data.
- * @returns {Promise<{level: string, levelName: string}>} The level test result.
+ * @returns {Promise<string>} The transcription result from the server.
  */
 export const submitLevelTest = async (audioBlob) => {
-  // When integrating with a real backend, you'll likely send the audio
-  // as FormData.
   const formData = new FormData();
-  formData.append('audio', audioBlob, 'level-test.wav');
+  formData.append('audioFile', audioBlob, 'level-test.webm'); // Changed key to 'audioFile' and extension to '.webm'
 
   try {
-    // The actual API call would look something like this:
-    // const response = await apiClient.post('/level-test', formData, {
-    //   headers: { 'Content-Type': 'multipart/form-data' },
-    // });
-    // return response.data;
-
-    // For now, we return a mock response after a delay.
-    console.log('Submitting level test to mock API...', formData.get('audio'));
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    const mockResponse = { level: '1', levelName: '오렌지 농장 Picker' };
-    console.log('Mock API response for level test:', mockResponse);
-    return mockResponse;
+    const response = await axios.post('http://3.34.91.248:8080/speech-to-text', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Axios sets this automatically for FormData, but good to be explicit
+      },
+    });
+    console.log('API response for level test:', response.data);
+    return response.data; // Server returns a string like "변환에 성공하였습니다.\n[transcribed text]"
   } catch (error) {
     console.error('Error submitting level test:', error);
-    // You might want to throw a custom error or handle it here
     throw error;
   }
 };
