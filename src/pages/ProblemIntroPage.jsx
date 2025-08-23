@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StatusBar from '../components/layout/StatusBar';
 import audioSrc from '../assets/dummy.m4a'; // Placeholder audio
+import backgroundImage from '../assets/levelstartbackground.png'; // 이미지 import 추가
+import caption from '../assets/levelstartcaption.png';
 
 const ProblemIntroPage = () => {
   const navigate = useNavigate();
@@ -19,8 +21,13 @@ const ProblemIntroPage = () => {
     }
   }, []);
 
-  const handleNextClick = () => {
+  const handleNext = () => {
     navigate('/problem', { state: { stageId } });
+  };
+
+  const handleAudioEnded = () => {
+    // 오디오가 끝나면 자동으로 다음 페이지로 이동
+    handleNext();
   };
 
   return (
@@ -35,34 +42,44 @@ const ProblemIntroPage = () => {
       alignItems: 'center',
       textAlign: 'center'
     }}>
-      <StatusBar />
-      <audio ref={audioRef} src={audioSrc} style={{display: 'none'}} />
-      
-      <div>
-        <p style={{fontFamily: 'Pretendard', fontSize: '28px', fontWeight: '600', color: '#333'}}>
-          주인이 소리쳐요!<br/>과연 무슨 일일까요?
-        </p>
-      </div>
-
-      <button 
-        onClick={handleNextClick}
+      {/* 배경 이미지 레이어 */}
+      <div
         style={{
           position: 'absolute',
-          bottom: 40,
-          right: 40,
-          padding: '15px 30px',
-          fontSize: '18px',
-          cursor: 'pointer',
-          background: '#0099FB',
-          color: 'white',
-          border: 'none',
-          borderRadius: '25px',
-          fontFamily: 'Pretendard',
-          fontWeight: '600'
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${backgroundImage})`, // import한 이미지 사용
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          zIndex: 1
         }}
-      >
-        다음
-      </button>
+      />
+      
+      <StatusBar />
+      <audio 
+        ref={audioRef} 
+        src={audioSrc} 
+        style={{display: 'none'}}
+        onEnded={handleAudioEnded} // 오디오 끝나면 실행
+      />
+      
+      <div style={{ 
+        position: 'absolute', 
+        top: '200px', 
+        left: '50%', 
+        transform: 'translateX(-50%)',
+        zIndex: 2 
+      }}>
+        <img 
+          src={caption} 
+          alt="caption" 
+          style={{ 
+          }} 
+        />
+      </div>
     </div>
   );
 };
