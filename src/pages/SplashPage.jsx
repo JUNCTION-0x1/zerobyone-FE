@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/common/Spinner';
-import StatusBar from '../components/layout/StatusBar'; // Import StatusBar
+import StatusBar from '../components/layout/StatusBar';
 
 const SplashPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("SplashPage: Navigating to /level-test in 5 seconds.");
     const timer = setTimeout(() => {
       navigate('/level-test');
+      console.log("SplashPage: Navigated to /level-test.");
     }, 5000);
 
     return () => clearTimeout(timer);

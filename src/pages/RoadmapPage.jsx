@@ -1,10 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
 import StatusBar from '../components/layout/StatusBar';
 
 const RoadmapPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { jobCategory } = location.state || { jobCategory: 'General' }; // Get jobCategory
   const { level, levelName } = useUserStore();
 
   // Mock data for roadmap stages with positions for the path
@@ -17,7 +19,7 @@ const RoadmapPage = () => {
 
   const handleStageClick = (stage) => {
     if (stage.active) {
-      navigate('/stage-start', { state: { stageId: stage.id } });
+      navigate('/stage-start', { state: { stageId: stage.id, jobCategory } }); // Pass jobCategory
     }
   };
 
@@ -48,7 +50,9 @@ const RoadmapPage = () => {
       <StatusBar />
       
       {/* Title */}
-      <h1 style={{textAlign: 'center', marginTop: '70px', fontFamily: 'Pretendard', color: '#333'}}>Roadmap</h1>
+      <h1 style={{textAlign: 'center', marginTop: '70px', fontFamily: 'Pretendard', color: '#333'}}>
+        {jobCategory} 학습 로드맵
+      </h1>
 
       {/* Mountain Path Background - simplified */}
       <div style={{ position: 'absolute', top: '15%', left: 0, width: '100%', height: '70%', zIndex: 0 }}>

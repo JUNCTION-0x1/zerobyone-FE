@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
 import Spinner from '../components/common/Spinner';
-import StatusBar from '../components/layout/StatusBar'; // Import StatusBar
+import StatusBar from '../components/layout/StatusBar';
 
 const IntermediateTestPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,7 +15,8 @@ const IntermediateTestPage = () => {
     console.log("Submitting for intermediate test...");
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    const mockResponse = { score: 85, passed: true, newLevel: '주니어', newLevelName: 'B2' };
+    const mockResponse = { score: 85, passed: true, newLevel: '주니어', newLevelName: 'B2' }; // Simulate pass
+    // const mockResponse = { score: 70, passed: false }; // Simulate fail
     
     if (mockResponse.passed) {
       setLevel(mockResponse.newLevel, mockResponse.newLevelName);
@@ -26,7 +27,11 @@ const IntermediateTestPage = () => {
     console.log("Intermediate test result:", mockResponse);
 
     setTimeout(() => {
-      navigate('/roadmap');
+      if (mockResponse.passed) {
+        navigate('/level-up'); // Navigate to LevelUpPage
+      } else {
+        navigate('/next-opportunity'); // Navigate to NextOpportunityPage
+      }
     }, 4000);
   };
 
@@ -46,7 +51,7 @@ const IntermediateTestPage = () => {
             <p>Keep practicing and try again!</p>
           </div>
         )}
-        <p>4초 후 로드맵으로 이동합니다.</p>
+        <p>4초 후 결과 페이지로 이동합니다.</p>
       </div>
     );
   }
