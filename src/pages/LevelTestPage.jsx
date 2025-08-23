@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
 import Spinner from '../components/common/Spinner';
 import StatusBar from '../components/layout/StatusBar'; // Import StatusBar
+import { submitLevelTest } from '../services/levelTestService'; // Import the service
 
 const LevelTestPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,20 +17,31 @@ const LevelTestPage = () => {
     }
   }, [hasCompletedLevelTest, navigate]);
 
-  const submitForLevelTest = async () => {
+  const handleTestSubmit = async () => {
     setIsSubmitting(true);
     console.log("Recording started...");
+    // Simulate recording for 3 seconds
     await new Promise(resolve => setTimeout(resolve, 3000));
     console.log("Recording finished. Submitting for level test...");
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    const mockResponse = { level: '인턴', levelName: 'A2' };
-    setLevel(mockResponse.level, mockResponse.levelName);
-    setLevelResult(mockResponse);
-    setIsSubmitting(false);
-    console.log("Level test result:", mockResponse);
-    setTimeout(() => {
-      navigate('/roadmap');
-    }, 3000);
+
+    try {
+      // Create a dummy audio blob for the service function
+      const dummyAudioBlob = new Blob(['dummy audio'], { type: 'audio/wav' });
+      const result = await submitLevelTest(dummyAudioBlob);
+      
+      setLevel(result.level, result.levelName);
+      setLevelResult(result);
+
+      setTimeout(() => {
+        navigate('/roadmap');
+      }, 3000);
+
+    } catch (error) {
+      console.error("Failed to submit level test", error);
+      // Optionally, show an error message to the user
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (levelResult) {
@@ -55,7 +67,7 @@ const LevelTestPage = () => {
       </div>
       
       <div 
-        onClick={!isSubmitting ? submitForLevelTest : undefined}
+        onClick={!isSubmitting ? handleTestSubmit : undefined}
         style={{
           width: 170, 
           height: 170, 

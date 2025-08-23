@@ -15,16 +15,10 @@ const RoadmapPage = () => {
     { id: 4, title: 'Stage 4', active: true, pos: { top: '20%', left: '60%' } },
   ];
 
-  const allStagesComplete = roadmapStages.every(stage => stage.active);
-
   const handleStageClick = (stage) => {
     if (stage.active) {
-      navigate('/learning', { state: { stageId: stage.id } });
+      navigate('/stage-start', { state: { stageId: stage.id } });
     }
-  };
-
-  const handleIntermediateTestClick = () => {
-    navigate('/intermediate-test');
   };
 
   const stageStyle = (stage) => ({
@@ -87,17 +81,6 @@ const RoadmapPage = () => {
           <p style={{margin: 0, fontSize: '14px'}}>({levelName || 'Unranked'})</p>
         </div>
       </div>
-
-      {allStagesComplete && (
-        <div style={{ position: 'absolute', bottom: '120px', left: '50%', transform: 'translateX(-50%)' }}>
-          <button 
-            onClick={handleIntermediateTestClick}
-            style={{ padding: '15px 30px', fontSize: '1.2em', cursor: 'pointer', background: '#0099FB', color: 'white', border: 'none', borderRadius: '25px' }}
-          >
-            Take Intermediate Test
-          </button>
-        </div>
-      )}
     </div>
   );
 };
