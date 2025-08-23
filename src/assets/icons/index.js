@@ -5,3 +5,5 @@ export { default as MicOffIcon } from './MicOffIcon';
 export { default as MicOnIcon } from './MicOnIcon';
 export { default as ProgressIcon } from './ProgressIcon';
 export { default as OrangeIcon } from './OrangeIcon';
+export { default as OrangePickerIcon } from './OrangePickerIcon';
+export { default as VocabularyIcon } from './VocabularyIcon';
