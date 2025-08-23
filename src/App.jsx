@@ -5,6 +5,8 @@ import RoadmapPage from './pages/RoadmapPage';
 import StageStartPage from './pages/StageStartPage';
 import StoryIntroPage from './pages/StoryIntroPage';
 import ProblemPage from './pages/ProblemPage';
+import IntermediateTestChallengePage from './pages/IntermediateTestChallengePage';
+import IntermediateTestFailurePage from './pages/IntermediateTestFailurePage'; // Import new page
 import IntermediateTestPage from './pages/IntermediateTestPage';
 import './App.css';
 
@@ -20,6 +22,8 @@ function App() {
             <Route path="/stage-start" element={<StageStartPage />} />
             <Route path="/story-intro" element={<StoryIntroPage />} />
             <Route path="/problem" element={<ProblemPage />} />
+            <Route path="/intermediate-test-challenge" element={<IntermediateTestChallengePage />} />
+            <Route path="/intermediate-test-failure" element={<IntermediateTestFailurePage />} /> {/* Add new route */}
             <Route path="/intermediate-test" element={<IntermediateTestPage />} />
           </Routes>
         </div>
