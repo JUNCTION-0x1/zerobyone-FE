@@ -34,10 +34,10 @@ const LevelTestPage = () => {
     setRecordingTime(0);
     setRecordingProgress(0);
 
-    // 타이머 시작
+    // 타이머 시작 (100ms마다 업데이트로 부드러운 애니메이션)
     timerRef.current = setInterval(() => {
       setRecordingTime((prevTime) => {
-        const newTime = prevTime + 1;
+        const newTime = prevTime + 0.1; // 0.1초씩 증가
         const progress = (newTime / recordingDuration) * 100;
         setRecordingProgress(progress);
 
@@ -48,7 +48,7 @@ const LevelTestPage = () => {
         }
         return newTime;
       });
-    }, 1000);
+    }, 100); // 100ms마다 업데이트
   };
 
   // 녹음 중지
@@ -115,7 +115,7 @@ const LevelTestPage = () => {
         height="852"
         style={{ position: 'absolute', top: 0, left: 0 }}
       >
-        {/* Main Text */}
+        {/* Main Text - 항상 동일한 텍스트 표시 */}
         {isSubmitting ? (
           <text
             x="50%"
@@ -128,31 +128,6 @@ const LevelTestPage = () => {
           >
             레벨 측정 중...
           </text>
-        ) : isRecording ? (
-          <>
-            <text
-              x="50%"
-              y="250"
-              textAnchor="middle"
-              fill="#353535"
-              fontSize="24"
-              fontFamily="Pretendard"
-              fontWeight="700"
-            >
-              녹음 중... ({recordingDuration - recordingTime}초 남음)
-            </text>
-            <text
-              x="50%"
-              y="280"
-              textAnchor="middle"
-              fill="#8E8E8E"
-              fontSize="18"
-              fontFamily="Pretendard"
-              fontWeight="500"
-            >
-              마이크를 다시 눌러 중지할 수 있습니다.
-            </text>
-          </>
         ) : (
           <>
             <text
@@ -180,8 +155,8 @@ const LevelTestPage = () => {
           </>
         )}
 
-        {/* Instruction Text */}
-        {!isRecording && !isSubmitting && (
+        {/* Instruction Text - 항상 표시 */}
+        {!isSubmitting && (
           <text
             x="50%"
             y="360"
@@ -201,12 +176,13 @@ const LevelTestPage = () => {
         <div
           style={{
             position: 'absolute',
-            left: 113, // 마이크 버튼보다 약간 왼쪽
-            top: 420, // 마이크 버튼보다 약간 위쪽
-            pointerEvents: 'none'
+            left: 106, // 마이크 버튼(122) - 진행바 절반(90) + 중앙 정렬(16) = 106
+            top: 420, // 마이크 버튼(436) - 여백(16) = 420
+            pointerEvents: 'none',
+            zIndex: 1 // 마이크 버튼 뒤에 배치
           }}
         >
-          <ProgressIcon width={167} height={189} progress={recordingProgress} />
+          <ProgressIcon width={180} height={180} progress={recordingProgress} />
         </div>
       )}
 
@@ -216,7 +192,8 @@ const LevelTestPage = () => {
           position: 'absolute',
           left: 122,
           top: 436,
-          cursor: isSubmitting ? 'default' : 'pointer'
+          cursor: isSubmitting ? 'default' : 'pointer',
+          zIndex: 2 // 진행바 위에 표시
         }}
         onClick={!isSubmitting ? handleMicClick : undefined}
       >
