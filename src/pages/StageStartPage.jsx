@@ -1,101 +1,81 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useUserStore from '../store/userStore';
 import StatusBar from '../components/layout/StatusBar';
+import backgroundImage from '../assets/images/roadmapBackground.png'; 
+import oranges from '../assets/images/oranges.png';
+import orange10 from '../assets/images/orange10.png';
 
 const StageStartPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { jobCategory } = location.state || { jobCategory: 'General' }; // Get jobCategory
-  const { level, levelName } = useUserStore();
-
-  // Mock data for roadmap stages with positions for the path
-  const roadmapStages = [
-    { id: 1, title: 'Stage 1', active: true, pos: { top: '65%', left: '20%' } },
-    { id: 2, title: 'Stage 2', active: true, pos: { top: '50%', left: '50%' } },
-    { id: 3, title: 'Stage 3', active: true, pos: { top: '35%', left: '30%' } },
-    { id: 4, title: 'Stage 4', active: true, pos: { top: '20%', left: '60%' } }
-  ];
-
-  const handleStageClick = (stage) => {
-    if (stage.active) {
-      navigate('/problem-intro', { state: { stageId: stage.id, jobCategory } }); // Pass jobCategory
-    }
-  };
-
-  const stageStyle = (stage) => ({
-    position: 'absolute',
-    top: stage.pos.top,
-    left: stage.pos.left,
-    transform: 'translate(-50%, -50%)',
-    width: 80,
-    height: 80,
-    borderRadius: '50%',
-    backgroundColor: stage.active ? '#53BBFD' : '#B0B0B0',
-    color: 'white',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    cursor: stage.active ? 'pointer' : 'not-allowed',
-    border: '4px solid white',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-    fontFamily: 'Pretendard',
-    fontWeight: '600',
-    fontSize: '16px'
-  });
+const navigate = useNavigate();
+const location = useLocation();
+const { jobCategory } = location.state || { jobCategory: 'General' }; // Get jobCategory
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative', background: '#EAF7FF', overflow: 'hidden' }}>
-      <StatusBar />
-
-      {/* Title */}
-      <h1 style={{ textAlign: 'center', marginTop: '70px', fontFamily: 'Pretendard', color: '#333' }}>
-        {jobCategory} 학습 로드맵
-      </h1>
-
-      {/* Mountain Path Background - simplified */}
-      <div style={{ position: 'absolute', top: '15%', left: 0, width: '100%', height: '70%', zIndex: 0 }}>
-        <svg width="100%" height="100%" viewBox="0 0 392 600" preserveAspectRatio="none">
-          <path
-            d="M 80 420 Q 196 300 120 210 T 240 120"
-            stroke="#A0D8FF"
-            strokeWidth="15"
-            fill="none"
-            strokeLinecap="round"
-          />
-        </svg>
+      <div style={{ 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100%', 
+        zIndex: 4 
+      }}>
+        <StatusBar />
       </div>
-
-      {/* Stages */}
-      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-        {roadmapStages.map((stage) => (
-          <div key={stage.id} onClick={() => handleStageClick(stage)} style={stageStyle(stage)}>
-            {stage.title}
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom UI Elements */}
+    
+      {/* oranges 배경 이미지 레이어 */}
       <div
         style={{
           position: 'absolute',
-          bottom: 20,
-          left: 20,
-          width: 'calc(100% - 40px)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end'
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${backgroundImage})`, // oranges를 배경으로
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          zIndex: 1
+        }}
+      />
+
+      {/* oranges 이미지를 배경 위에 올리기 */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '54%', 
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 2
         }}
       >
-        {/* Character Image */}
-        <img src="/icons/character.svg" alt="character" style={{ width: 80, height: 80 }} />
+        <img 
+          src={oranges} 
+          alt="oranges" 
+          style={{
+            // 원본 크기 유지
+          }}
+        />
+      </div>
 
-        {/* User Level */}
-        <div style={{ textAlign: 'right', fontFamily: 'Pretendard', color: '#333' }}>
-          <p style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>Level: {level || 'N/A'}</p>
-          <p style={{ margin: 0, fontSize: '14px' }}>({levelName || 'Unranked'})</p>
-        </div>
+      {/* orange10 이미지를 oranges 위에 추가 */}
+      <div
+        onClick={() => navigate('/problem-intro', { state: { stageId: 10, jobCategory } })} 
+        style={{
+          position: 'absolute',
+          top: '15%',
+          left: '80%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 3,
+          cursor: 'pointer' // 클릭 가능함을 표시
+        }}
+      >
+        <img 
+          src={orange10} 
+          alt="orange10" 
+          style={{
+            // 원본 크기 유지
+          }}
+        />
       </div>
     </div>
   );
