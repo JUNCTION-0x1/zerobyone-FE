@@ -14,6 +14,8 @@ import IntermediateTestResultPage from './pages/IntermediateTestResultPage'; // 
 import OverallRoadmapPage from './pages/OverallRoadmapPage'; // New
 import LevelUpPage from './pages/LevelUpPage'; // New
 import NextOpportunityPage from './pages/NextOpportunityPage'; // New
+import FinalRoadmapPage from './pages/FinalRoadmapPage';
+import MidTestResult from './pages/MidTestResult';
 import './App.css';
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
             <Route path="/intermediate-test" element={<IntermediateTestPage />} />
             <Route path="/level-up" element={<LevelUpPage />} /> {/* New */}
             <Route path="/next-opportunity" element={<NextOpportunityPage />} /> {/* New */}
+            <Route path="/final-roadmap" element={<FinalRoadmapPage/>}></Route>
+            <Route path="/mid-test-result" element={<MidTestResult/>}></Route>
           </Routes>
         </div>
       </BrowserRouter>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
 import StatusBar from '../components/layout/StatusBar';
 import { OrangeIcon } from '../assets/icons';
-import backgroundImg from '../assets/images/leveltestresult1.png';
+import backgroundImg from '../assets/images/leveltestresult.png';
 
 const IntermediateTestResultPage = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const IntermediateTestResultPage = () => {
   useEffect(() => {
     // Automatically navigate to the overall roadmap after a short delay
     const timer = setTimeout(() => {
-      navigate('/overall-roadmap');
+      navigate('/final-roadmap');
     }, 3000); // Display result for 3 seconds
 
     return () => clearTimeout(timer);

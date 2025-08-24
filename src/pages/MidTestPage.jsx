@@ -111,8 +111,7 @@ const MidTestPage = () => {
         setCurrentQuestionIndex((prev) => prev + 1);
       } else {
         // 테스트 완료
-        alert('레벨업 테스트를 완료했습니다!');
-        navigate('/roadmap');
+        navigate('/mid-test-result')
       }
     }, 1000);
   };
