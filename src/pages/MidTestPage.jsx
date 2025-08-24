@@ -17,8 +17,8 @@ const SpeechBubbleIcon = ({ className = '' }) => (
   </svg>
 );
 
-const MicrophoneIcon = ({ className = '', isActive = false }) => (
-  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className={className}>
+const MicrophoneIcon = ({ className = '', isActive = false, width = 80, height = 80 }) => (
+  <svg width={width} height={height} viewBox="0 0 80 80" fill="none" className={className}>
     <rect x="30" y="10" width="20" height="35" rx="10" fill="white" />
     <path
       d="M20 35C20 43.2843 26.7157 50 35 50H45C53.2843 50 60 43.2843 60 35"
@@ -225,15 +225,15 @@ const MidTestPage = () => {
   };
 
   const micButtonStyle = {
-    width: '144px', // w-36
-    height: '144px', // h-36
-    padding: '32px', // p-8
+    width: '148px', // level-test와 동일한 크기
+    height: '148px', // level-test와 동일한 크기
+    padding: '0px', // 패딩 제거하여 아이콘이 완전히 보이도록
     background: isRecording ? '#DC2626' : '#52525B', // recording: red-600, default: neutral-700
     borderRadius: '74px', // rounded-[74px]
     display: 'inline-flex',
-    justifyContent: 'start',
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: '10px', // gap-2.5
+    gap: '0px',
     border: 'none',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
@@ -241,19 +241,18 @@ const MidTestPage = () => {
   };
 
   const micIconContainerStyle = {
-    width: '80px', // w-20
-    height: '80px', // h-20
+    width: '148px', // level-test와 동일한 크기
+    height: '148px', // level-test와 동일한 크기
     position: 'relative',
     overflow: 'hidden'
   };
 
   const micIconStyle = {
-    width: '56px', // w-14
-    height: '80px', // h-20
+    width: '148px', // level-test와 동일한 크기
+    height: '148px', // level-test와 동일한 크기
     position: 'absolute',
-    left: '15.94px',
-    top: '5.31px',
-    background: 'white'
+    left: '0px', // 컨테이너와 동일한 크기이므로 0px
+    top: '0px' // 컨테이너와 동일한 크기이므로 0px
   };
 
   const recordingIndicatorStyle = {
@@ -312,11 +311,11 @@ const MidTestPage = () => {
             <div style={micIconContainerStyle}>
               {isRecording ? (
                 <div style={micIconStyle}>
-                  <MicrophoneIcon isActive={isRecording} />
+                  <MicrophoneIcon isActive={isRecording} width="148" height="148" />
                 </div>
               ) : (
                 <div style={micIconStyle}>
-                  <MicOffIcon width="56" height="80" />
+                  <MicOffIcon width="148" height="148" />
                 </div>
               )}
             </div>
