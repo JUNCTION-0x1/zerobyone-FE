@@ -201,7 +201,7 @@ const ProblemPage = () => {
                   marginBottom: '20px', // 25px에서 20px로 줄임
                   color: '#666'
                 }}>
-                  주어 you가 생략되어 명령으로 오해할 수 있지만, please를 붙이면 공손한 요청이 돼요.
+                  {feedback.hint || "주어 you가 생략되어 명령으로 오해할 수 있지만, please를 붙이면 공손한 요청이 돼요."}
                 </p>
                 
                 {/* 예시 제목 */}
@@ -297,14 +297,14 @@ const ProblemPage = () => {
                 {/* 오답 표시 - 빨간색 X */}
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'flex-start', // center에서 flex-start로 변경하여 왼쪽 정렬
+                  justifyContent: 'flex-start',
                   alignItems: 'center',
-                  margin: '10px 0', // auto에서 0으로 변경하여 왼쪽 정렬
+                  margin: '10px 0',
                   marginBottom: '20px',
                 }}>
                   <span style={{
-                    color: 'FF3939', // 빨간색
-                    fontSize: '60px', // 크기 증가
+                    color: '#FF3939', // 빨간색으로 변경
+                    fontSize: '70px',
                     fontWeight: 'bold'
                   }}>
                     X
@@ -328,7 +328,7 @@ const ProblemPage = () => {
                   marginBottom: '20px', // 25px에서 20px로 줄임
                   color: '#666'
                 }}>
-                  주어 you가 생략되어 명령으로 오해할 수 있지만, please를 붙이면 공손한 요청이 돼요.
+                  {feedback.hint || "주어 you가 생략되어 명령으로 오해할 수 있지만, please를 붙이면 공손한 요청이 돼요."}
                 </p>
                 
                 {/* 예시 제목 */}
