@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
 import StatusBar from '../components/layout/StatusBar';
 import { OrangeIcon } from '../assets/icons';
+import backgroundImg from '../assets/images/leveltestresult.png';
 
 const IntermediateTestResultPage = () => {
   const navigate = useNavigate();
@@ -18,56 +19,48 @@ const IntermediateTestResultPage = () => {
   }, [navigate]);
 
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative', background: '#F4F4F4', overflow: 'hidden' }}>
-      <StatusBar />
-
-      {/* 당신의 현재 레벨은... */}
-      <div
-        style={{
-          left: 99,
-          top: 242,
-          position: 'absolute',
-          textAlign: 'center',
-          color: '#525252',
-          fontSize: 24,
-          fontFamily: 'Pretendard',
-          fontWeight: '700',
-          lineHeight: '36px'
-        }}
-      >
-        당신의 현재 레벨은...
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+      }}
+    >
+      <div style={{ 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100%', 
+        zIndex: 4 
+      }}>
+        <StatusBar />
       </div>
 
-      {/* 오렌지 농장 PIcker */}
-      <div
-        style={{
-          width: 249,
-          height: 51,
-          left: 75,
-          top: 301,
-          position: 'absolute',
-          color: '#F97316',
-          fontSize: 32,
-          fontFamily: 'Pretendard',
-          fontWeight: '700',
-          lineHeight: '52px'
-        }}
-      >
-        {levelName || '오렌지 농장 PIcker'}
-      </div>
-
-      {/* 귤 아이콘 (가운데) */}
+      {/* 배경 이미지 레이어 */}
       <div
         style={{
           position: 'absolute',
-          left: '50%',
-          top: 384,
-          transform: 'translateX(-50%)'
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${backgroundImg})`,
+          backgroundSize: 'auto',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          zIndex: 1
         }}
-      >
-        <OrangeIcon width={84} height={113} />
-      </div>
+      />
 
+     
+
+     
+   
       {/* 3초 후 로드맵으로 이동합니다 */}
       <div
         style={{
