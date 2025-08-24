@@ -385,7 +385,7 @@ const ProblemPage = () => {
                   </button>
 
                   <button 
-                    onClick={() => navigate('/roadmap')} 
+                    onClick={() => navigate('/problem-success')} 
                     style={{
                       padding: '15px 30px',
                       fontSize: '18px',
