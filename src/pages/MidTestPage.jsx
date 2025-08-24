@@ -118,7 +118,7 @@ const MidTestPage = () => {
   };
 
   const containerStyle = {
-    width: '384px',
+    width: '393px',
     height: '852px',
     position: 'relative',
     background: '#F4F4F5', // zinc-100
@@ -140,7 +140,7 @@ const MidTestPage = () => {
   };
 
   const cardStyle = {
-    width: '230px',
+    width: '228px',
     height: '216px',
     position: 'absolute',
     left: '15px',
