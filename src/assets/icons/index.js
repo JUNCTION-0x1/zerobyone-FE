@@ -7,3 +7,5 @@ export { default as ProgressIcon } from './ProgressIcon';
 export { default as OrangeIcon } from './OrangeIcon';
 export { default as OrangePickerIcon } from './OrangePickerIcon';
 export { default as VocabularyIcon } from './VocabularyIcon';
+export { default as LevelTestCheckOrangeIcon } from './LevelTestCheckOrangeIcon';
+export { default as MidTestSpeakerIcon } from './MidTestSpeakerIcon';

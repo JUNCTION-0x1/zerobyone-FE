@@ -5,6 +5,8 @@ import RoadmapPage from './pages/RoadmapPage';
 import StageStartPage from './pages/StageStartPage';
 import ProblemIntroPage from './pages/ProblemIntroPage';
 import ProblemPage from './pages/ProblemPage';
+import ProblemSuccessPage from './pages/ProblemSuccessPage';
+import MidTestPage from './pages/MidTestPage';
 import IntermediateTestChallengePage from './pages/IntermediateTestChallengePage';
 import IntermediateTestFailurePage from './pages/IntermediateTestFailurePage';
 import IntermediateTestPage from './pages/IntermediateTestPage';
@@ -28,6 +30,8 @@ function App() {
             <Route path="/roadmap" element={<StageStartPage />} />
             <Route path="/problem-intro" element={<ProblemIntroPage />} />
             <Route path="/problem" element={<ProblemPage />} />
+            <Route path="/problem-success" element={<ProblemSuccessPage />} />
+            <Route path="/mid-test" element={<MidTestPage />} />
             <Route path="/intermediate-test-challenge" element={<IntermediateTestChallengePage />} />
             <Route path="/intermediate-test-failure" element={<IntermediateTestFailurePage />} />
             <Route path="/intermediate-test" element={<IntermediateTestPage />} />

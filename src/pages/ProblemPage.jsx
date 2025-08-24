@@ -13,8 +13,13 @@ const ProblemPage = () => {
 
   // This would likely come from a service based on stageId
   const problems = [
-    { id: 1, script: "농장주인이 한 말을 다시 듣고 선택해 주세요!", choices: ["오늘 날씨 어때?", "오늘 한잔 어때?", "오늘 기분 어때?"], answer: "오늘 기분 어때?" },
-    { id: 2, script: "두 번째 문제입니다.", choices: ["Choice A", "Choice B", "Choice C"], answer: "Choice B" },
+    {
+      id: 1,
+      script: '농장주인이 한 말을 다시 듣고 선택해 주세요!',
+      choices: ['오늘 날씨 어때?', '오늘 한잔 어때?', '오늘 기분 어때?'],
+      answer: '오늘 기분 어때?'
+    },
+    { id: 2, script: '두 번째 문제입니다.', choices: ['Choice A', 'Choice B', 'Choice C'], answer: 'Choice B' }
   ];
   const totalProblems = problems.length;
 
@@ -29,15 +34,14 @@ const ProblemPage = () => {
     try {
       const currentProblem = problems[currentProblemIndex];
       const result = await checkAnswer(stageId, currentProblem.id, choice);
-      
+
       setIsCorrect(result.isCorrect);
       if (!result.isCorrect) {
         setFeedback({ correctAnswer: result.correctAnswer, hint: result.hint });
       }
       setShowResult(true);
-
     } catch (error) {
-      console.error("Failed to check answer", error);
+      console.error('Failed to check answer', error);
     } finally {
       setIsLoading(false);
     }
@@ -49,8 +53,14 @@ const ProblemPage = () => {
     if (currentProblemIndex < totalProblems - 1) {
       setCurrentProblemIndex(currentProblemIndex + 1);
     } else {
-      alert('Congratulations! You have completed this stage.');
-      navigate('/roadmap');
+      // 모든 문제를 완료했을 때 ProblemSuccess 페이지로 이동
+      navigate('/problem-success', {
+        state: {
+          stageId,
+          stageName: 'Picker',
+          stageLevel: 10
+        }
+      });
     }
   };
 
@@ -73,46 +83,63 @@ const ProblemPage = () => {
   };
 
   return (
-    <div style={{width: '100%', height: '100%', position: 'relative', background: '#EAF7FF', overflow: 'hidden', padding: '20px', boxSizing: 'border-box'}}>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        background: '#EAF7FF',
+        overflow: 'hidden',
+        padding: '20px',
+        boxSizing: 'border-box'
+      }}
+    >
       <StatusBar />
-      
-      <div style={{position: 'absolute', top: '70px', left: '20px'}}>
+
+      <div style={{ position: 'absolute', top: '70px', left: '20px' }}>
         <AudioPlayer src={audioSrc} />
-        <p style={{fontFamily: 'Pretendard', fontWeight: '600', color: '#333', margin: '10px 0 0 5px'}}>
+        <p style={{ fontFamily: 'Pretendard', fontWeight: '600', color: '#333', margin: '10px 0 0 5px' }}>
           {currentProblemIndex + 1} / {totalProblems}
         </p>
       </div>
 
-      <div style={{textAlign: 'center', marginTop: '200px'}}>
+      <div style={{ textAlign: 'center', marginTop: '200px' }}>
         {!showResult ? (
           <div>
-            <h2 style={{fontFamily: 'Pretendard', color: '#333', minHeight: '100px'}}>{currentProblem.script}</h2>
+            <h2 style={{ fontFamily: 'Pretendard', color: '#333', minHeight: '100px' }}>{currentProblem.script}</h2>
             <div style={{ marginTop: '30px' }}>
               {currentProblem.choices.map((choice, index) => (
-                <button 
-                  key={index} 
-                  onClick={() => handleChoiceClick(choice)} 
-                  disabled={isLoading}
-                  style={buttonStyle}
-                >
+                <button key={index} onClick={() => handleChoiceClick(choice)} disabled={isLoading} style={buttonStyle}>
                   {choice}
                 </button>
               ))}
             </div>
           </div>
         ) : (
-          <div style={{fontFamily: 'Pretendard', color: '#333'}}>
+          <div style={{ fontFamily: 'Pretendard', color: '#333' }}>
             {isCorrect ? (
               <div>
                 <h2>Correct! ✅</h2>
-                <button onClick={handleNext} style={{...buttonStyle, background: '#53BBFD', color: 'white', marginTop: '20px'}}>Next Problem</button>
+                <button
+                  onClick={handleNext}
+                  style={{ ...buttonStyle, background: '#53BBFD', color: 'white', marginTop: '20px' }}
+                >
+                  Next Problem
+                </button>
               </div>
             ) : (
               <div>
                 <h2>Incorrect ❌</h2>
-                <p>The correct answer is: <strong>"{feedback.correctAnswer}"</strong></p>
+                <p>
+                  The correct answer is: <strong>"{feedback.correctAnswer}"</strong>
+                </p>
                 <p>Hint: {feedback.hint}</p>
-                <button onClick={handleNext} style={{...buttonStyle, background: '#53BBFD', color: 'white', marginTop: '20px'}}>Next</button>
+                <button
+                  onClick={handleNext}
+                  style={{ ...buttonStyle, background: '#53BBFD', color: 'white', marginTop: '20px' }}
+                >
+                  Next
+                </button>
               </div>
             )}
           </div>
