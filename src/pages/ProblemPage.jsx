@@ -34,8 +34,9 @@ const ProblemPage = () => {
         setFeedback({ correctAnswer: result.correctAnswer, hint: result.hint });
       }
       setShowResult(true);
+
     } catch (error) {
-      console.error('Failed to check answer', error);
+      console.error("Failed to check answer", error);
     } finally {
       setIsLoading(false);
     }
@@ -47,14 +48,8 @@ const ProblemPage = () => {
     if (currentProblemIndex < totalProblems - 1) {
       setCurrentProblemIndex(currentProblemIndex + 1);
     } else {
-      // 모든 문제를 완료했을 때 ProblemSuccess 페이지로 이동
-      navigate('/problem-success', {
-        state: {
-          stageId,
-          stageName: 'Picker',
-          stageLevel: 10
-        }
-      });
+      alert('Congratulations! You have completed this stage.');
+      navigate('/roadmap');
     }
   };
 
@@ -87,7 +82,7 @@ const ProblemPage = () => {
       boxSizing: 'border-box'
     }}>
       <StatusBar />
-      
+
       {/* 뒤로가기 버튼 */}
       <div style={{
         position: 'absolute',
@@ -97,7 +92,7 @@ const ProblemPage = () => {
       }}>
         <div style={{ fontSize: '24px', color: '#333' }}>‹</div>
       </div>
-      
+
       {/* 오디오 플레이어와 진행률 */}
       {!showResult && ( // 정답/오답 표시할 때는 숨김
         <div style={{
@@ -147,37 +142,265 @@ const ProblemPage = () => {
               width: '100%'
             }}>
               {currentProblem.choices.map((choice, index) => (
-                <button key={index} onClick={() => handleChoiceClick(choice)} disabled={isLoading} style={buttonStyle}>
+                <button 
+                  key={index} 
+                  onClick={() => handleChoiceClick(choice)} 
+                  disabled={isLoading}
+                  style={buttonStyle}
+                >
                   {choice}
                 </button>
               ))}
             </div>
           </div>
         ) : (
-          <div style={{ fontFamily: 'Pretendard', color: '#333' }}>
+          <div style={{
+            fontFamily: 'Pretendard', 
+            color: '#333',
+            textAlign: 'left',
+            padding: '0 20px',
+            marginTop: '-150px' // -100px에서 -150px로 더 위로 올림
+          }}>
             {isCorrect ? (
               <div>
-                <h2>Correct! ✅</h2>
-                <button
-                  onClick={handleNext}
-                  style={{ ...buttonStyle, background: '#53BBFD', color: 'white', marginTop: '20px' }}
-                >
-                  Next Problem
-                </button>
+                {/* 정답 표시 - 파란색 원 안에 흰색 O */}
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  background: '#53BBFD',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  margin: '10px auto', // 20px에서 10px로 줄임
+                  marginBottom: '20px' // 30px에서 20px로 줄임
+                }}>
+                  <span style={{
+                    color: 'white',
+                    fontSize: '40px',
+                    fontWeight: 'bold'
+                  }}>
+                    O
+                  </span>
+                </div>
+
+                {/* 정답 텍스트 */}
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  marginBottom: '15px', // 20px에서 15px로 줄임
+                  color: '#333'
+                }}>
+                  정답 : {feedback.correctAnswer || currentProblem.answer}
+                </h3>
+
+                {/* 설명 텍스트 */}
+                <p style={{
+                  fontSize: '16px',
+                  lineHeight: '1.6',
+                  marginBottom: '20px', // 25px에서 20px로 줄임
+                  color: '#666'
+                }}>
+                  {feedback.hint || "주어 you가 생략되어 명령으로 오해할 수 있지만, please를 붙이면 공손한 요청이 돼요."}
+                </p>
+
+                {/* 예시 제목 */}
+                <h4 style={{
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  marginBottom: '12px', // 15px에서 12px로 줄임
+                  color: '#333'
+                }}>
+                  &lt;예시&gt;
+                </h4>
+
+                {/* 예시 문장들 */}
+                <div style={{ marginBottom: '12px' }}> {/* 15px에서 12px로 줄임 */}
+                  <p style={{ fontSize: '16px', marginBottom: '5px', color: '#333' }}>
+                    Work a little faster.
+                  </p>
+                  <p style={{ fontSize: '16px', marginBottom: '12px', color: '#666' }}> {/* 15px에서 12px로 줄임 */}
+                    = "좀 더 빨리 일해라."
+                  </p>
+                </div>
+
+                <div style={{ marginBottom: '20px' }}> {/* 25px에서 20px로 줄임 */}
+                  <p style={{ fontSize: '16px', marginBottom: '5px', color: '#333' }}>
+                    Work a little faster, please.
+                  </p>
+                  <p style={{ fontSize: '16px', marginBottom: '12px', color: '#666' }}> {/* 15px에서 12px로 줄임 */}
+                    = "조금만 더 빨리 해주세요."
+                  </p>
+                </div>
+
+                {/* 버튼들 */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px', // 15px에서 12px로 줄임
+                  marginTop: '20px' // 30px에서 20px로 줄임
+                }}>
+                  <button 
+                    onClick={handleNext} 
+                    style={{
+                      padding: '15px 30px',
+                      fontSize: '18px',
+                      fontFamily: 'Pretendard',
+                      fontWeight: '600',
+                      background: '#FF8C00',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '15px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    다른 문제
+                  </button>
+
+                  <button 
+                    onClick={() => navigate('/problem-intro')}
+                    style={{
+                      padding: '15px 30px',
+                      fontSize: '18px',
+                      fontFamily: 'Pretendard',
+                      fontWeight: '600',
+                      background: '#53BBFD',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '15px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    다음
+                  </button>
+
+                  <button 
+                    onClick={() => navigate('/roadmap')} 
+                    style={{
+                      padding: '15px 30px',
+                      fontSize: '18px',
+                      fontFamily: 'Pretendard',
+                      fontWeight: '600',
+                      background: '#D7D7D7',
+                      color: '#333',
+                      border: 'none',
+                      borderRadius: '15px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    학습 종료
+                  </button>
+                </div>
               </div>
             ) : (
               <div>
-                <h2>Incorrect ❌</h2>
-                <p>
-                  The correct answer is: <strong>"{feedback.correctAnswer}"</strong>
+                {/* 오답 표시 - 빨간색 X */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  margin: '10px 0',
+                  marginBottom: '20px',
+                }}>
+                  <span style={{
+                    color: '#FF3939', // 빨간색으로 변경
+                    fontSize: '70px',
+                    fontWeight: 'bold'
+                  }}>
+                    X
+                  </span>
+                </div>
+
+                {/* 정답 텍스트 */}
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  marginBottom: '15px', // 20px에서 15px로 줄임
+                  color: '#333'
+                }}>
+                  정답 : <span style={{ color: '#53BBFD' }}>{feedback.correctAnswer || currentProblem.answer}</span>
+                </h3>
+
+                {/* 설명 텍스트 */}
+                <p style={{
+                  fontSize: '16px',
+                  lineHeight: '1.6',
+                  marginBottom: '20px', // 25px에서 20px로 줄임
+                  color: '#666'
+                }}>
+                  {feedback.hint || "주어 you가 생략되어 명령으로 오해할 수 있지만, please를 붙이면 공손한 요청이 돼요."}
                 </p>
-                <p>Hint: {feedback.hint}</p>
-                <button
-                  onClick={handleNext}
-                  style={{ ...buttonStyle, background: '#53BBFD', color: 'white', marginTop: '20px' }}
-                >
-                  Next
-                </button>
+
+                {/* 예시 제목 */}
+                <h4 style={{
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  marginBottom: '12px', // 15px에서 12px로 줄임
+                  color: '#333'
+                }}>
+                  &lt;예시&gt;
+                </h4>
+
+                {/* 예시 문장들 */}
+                <div style={{ marginBottom: '12px' }}> {/* 15px에서 12px로 줄임 */}
+                  <p style={{ fontSize: '16px', marginBottom: '5px', color: '#333' }}>
+                    Work a little faster.
+                  </p>
+                  <p style={{ fontSize: '16px', marginBottom: '12px', color: '#666' }}> {/* 15px에서 12px로 줄임 */}
+                    = "좀 더 빨리 일해라."
+                  </p>
+                </div>
+
+                <div style={{ marginBottom: '20px' }}> {/* 25px에서 20px로 줄임 */}
+                  <p style={{ fontSize: '16px', marginBottom: '5px', color: '#333' }}>
+                    Work a little faster, please.
+                  </p>
+                  <p style={{ fontSize: '16px', marginBottom: '12px', color: '#666' }}> {/* 15px에서 12px로 줄임 */}
+                    = "조금만 더 빨리 해주세요."
+                  </p>
+                </div>
+
+                {/* 버튼들 */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px', 
+                  marginTop: '20px' 
+                }}>
+                  <button 
+                    onClick={handleNext} 
+                    style={{
+                      padding: '15px 30px',
+                      fontSize: '18px',
+                      fontFamily: 'Pretendard',
+                      fontWeight: '600',
+                      background: '#FF8C00',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '15px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    다른 문제
+                  </button>
+
+                  <button 
+                    onClick={() => navigate('/roadmap')} 
+                    style={{
+                      padding: '15px 30px',
+                      fontSize: '18px',
+                      fontFamily: 'Pretendard',
+                      fontWeight: '600',
+                      background: '#D7D7D7',
+                      color: '#333',
+                      border: 'none',
+                      borderRadius: '15px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    학습 종료
+                  </button>
+                </div>
               </div>
             )}
           </div>
