@@ -140,7 +140,7 @@ const MidTestPage = () => {
   };
 
   const cardStyle = {
-    width: '316px',
+    width: '230px',
     height: '216px',
     position: 'absolute',
     left: '15px',
@@ -156,7 +156,7 @@ const MidTestPage = () => {
   };
 
   const cardContentStyle = {
-    width: '208px', // w-52
+    width: '208px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'start',
