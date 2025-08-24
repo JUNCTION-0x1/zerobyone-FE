@@ -13,7 +13,7 @@ const ProblemPage = () => {
 
   const problems = [
     { id: 1, script: "농장주인이 한 말을 다시 듣고 선택해 주세요!", choices: ["오늘 날씨 어때?", "오늘 기분 어때?", "오늘 한 잔 어때?"], answer: "오늘 기분 어때?" },
-    { id: 2, script: "두 번째 문제입니다.", choices: ["Choice A", "Choice B", "Choice C"], answer: "Choice B" },
+    { id: 2, script: "마을 사람이 한 말을 다시 듣고 선택해 주세요!", choices: ["어제 잠은 잘 잤어?", "밥은 먹었어?", "내일 시간 돼?"], answer: "밥은 먹었어?" },
   ];
   const totalProblems = problems.length;
 
