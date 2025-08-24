@@ -32,7 +32,7 @@ const ProblemSuccessPage = () => {
   };
 
   const containerStyle = {
-    width: '384px',
+    width: '100%',
     height: '852px',
     position: 'relative',
     background: '#F4F4F5', // zinc-100
@@ -59,8 +59,9 @@ const ProblemSuccessPage = () => {
 
   const titleStyle = {
     position: 'absolute',
-    left: '112px',
+    left: '50px',
     top: '316px',
+    width: 'calc(100% - 100px)',
     textAlign: 'center',
     justifyContent: 'start',
     color: '#404040', // neutral-700
@@ -72,9 +73,9 @@ const ProblemSuccessPage = () => {
 
   const subtitleStyle = {
     position: 'absolute',
-    left: '25px',
+    left: '50px',
     top: '418px',
-    width: '320px', // w-80
+    width: 'calc(100% - 100px)',
     textAlign: 'center',
     justifyContent: 'start',
     color: '#A3A3A3', // neutral-400
@@ -85,12 +86,12 @@ const ProblemSuccessPage = () => {
   };
 
   const primaryButtonStyle = {
-    width: '384px',
+    width: 'calc(100% - 24px)',
     height: '56px',
     position: 'absolute',
-    left: '16px',
+    left: '12px',
     top: '698px',
-    padding: '6px 144px',
+    padding: '6px 0px',
     background: '#FB923C', // orange-400
     borderRadius: '10px',
     display: 'inline-flex',
@@ -112,12 +113,12 @@ const ProblemSuccessPage = () => {
   };
 
   const secondaryButtonStyle = {
-    width: '384px',
+    width: 'calc(100% - 24px)',
     height: '56px',
     position: 'absolute',
-    left: '16px',
+    left: '12px',
     top: '763px',
-    padding: '5px 144px',
+    padding: '5px 0px',
     background: '#E5E7EB', // gray-200
     borderRadius: '10px',
     display: 'inline-flex',

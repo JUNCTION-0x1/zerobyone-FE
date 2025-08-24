@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StatusBar from '../components/layout/StatusBar';
-import { MidTestSpeakerIcon, MicOffIcon } from '../assets/icons';
+import { MidTestSpeakerIcon, MicOffIcon, MicOnIcon } from '../assets/icons';
 
 // SVG 아이콘 컴포넌트들
 const SpeechBubbleIcon = ({ className = '' }) => (
@@ -118,7 +118,7 @@ const MidTestPage = () => {
   };
 
   const containerStyle = {
-    width: '393px',
+    width: '100%',
     height: '852px',
     position: 'relative',
     background: '#F4F4F5', // zinc-100
@@ -128,8 +128,9 @@ const MidTestPage = () => {
 
   const titleStyle = {
     position: 'absolute',
-    left: '132px',
+    left: '50%',
     top: '83px',
+    transform: 'translateX(-50%)',
     textAlign: 'center',
     justifyContent: 'start',
     color: '#404040', // neutral-700
@@ -143,20 +144,21 @@ const MidTestPage = () => {
     width: '228px',
     height: '216px',
     position: 'absolute',
-    left: '15px',
+    left: '50%',
     top: '202px',
+    transform: 'translateX(-50%)',
     padding: '28px 64px', // px-16 py-7
     background: '#E5E7EB', // neutral-200
     borderRadius: '30px',
     display: 'inline-flex',
     flexDirection: 'column',
     justifyContent: 'start',
-    alignItems: 'start',
+    alignItems: 'center',
     gap: '10px'
   };
 
   const cardContentStyle = {
-    width: '208px',
+    width: '240px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'start',
@@ -204,8 +206,9 @@ const MidTestPage = () => {
   const micSectionStyle = {
     width: '256px', // w-64
     position: 'absolute',
-    left: '68px',
+    left: '50%',
     top: '509px',
+    transform: 'translateX(-50%)',
     display: 'inline-flex',
     flexDirection: 'column',
     justifyContent: 'start',
@@ -216,12 +219,13 @@ const MidTestPage = () => {
   const micTextStyle = {
     alignSelf: 'stretch',
     textAlign: 'center',
-    justifyContent: 'start',
+    justifyContent: 'center',
     color: '#A3A3A3', // neutral-400
-    fontSize: '20px',
+    fontSize: '18px',
     fontWeight: '500',
     fontFamily: 'Pretendard',
-    lineHeight: '28px' // leading-7
+    lineHeight: '24px',
+    whiteSpace: 'nowrap'
   };
 
   const micButtonStyle = {
@@ -244,15 +248,16 @@ const MidTestPage = () => {
     width: '148px', // level-test와 동일한 크기
     height: '148px', // level-test와 동일한 크기
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   };
 
   const micIconStyle = {
     width: '148px', // level-test와 동일한 크기
     height: '148px', // level-test와 동일한 크기
-    position: 'absolute',
-    left: '0px', // 컨테이너와 동일한 크기이므로 0px
-    top: '0px' // 컨테이너와 동일한 크기이므로 0px
+    position: 'relative'
   };
 
   const recordingIndicatorStyle = {
@@ -311,7 +316,7 @@ const MidTestPage = () => {
             <div style={micIconContainerStyle}>
               {isRecording ? (
                 <div style={micIconStyle}>
-                  <MicrophoneIcon isActive={isRecording} width="148" height="148" />
+                  <MicOnIcon width="148" height="148" />
                 </div>
               ) : (
                 <div style={micIconStyle}>
@@ -320,8 +325,6 @@ const MidTestPage = () => {
               )}
             </div>
           </button>
-
-          {isRecording && <div style={recordingIndicatorStyle}>녹음 중... {recordingTime}초</div>}
         </div>
       </div>
     </div>
