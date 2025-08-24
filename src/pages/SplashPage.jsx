@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/common/Spinner';
 import StatusBar from '../components/layout/StatusBar';
+import airplaneImage from '../assets/images/airplane.png';
 
 const SplashPage = () => {
   const navigate = useNavigate();
@@ -26,22 +27,24 @@ const SplashPage = () => {
         overflow: 'hidden'
       }}
     >
-      <StatusBar />
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <StatusBar />
+      </div>
 
-      {/* Placeholder for the airplane image */}
-      <div
+      {/* Background airplane image */}
+      <img
+        src={airplaneImage}
+        alt="Airplane Background"
         style={{
           position: 'absolute',
-          top: '40%', // Adjusted to make space for the spinner
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          textAlign: 'center',
-          color: 'white'
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: 0
         }}
-      >
-        <span style={{ fontSize: '60px' }}>✈️</span>
-        <p style={{ fontFamily: 'Pretendard', fontSize: '24px', fontWeight: '600' }}>ZeroByOne</p>
-      </div>
+      />
 
       <Spinner />
     </div>
